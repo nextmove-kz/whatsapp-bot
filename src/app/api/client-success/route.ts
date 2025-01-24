@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
-    const { phone, id, orderItems, orderDetails, paymentMethod } = await req.json();
+    const { phone, business, id, orderItems, orderDetails, paymentMethod } = await req.json();
 
-    if (!phone || !id || !orderItems || !orderDetails || !paymentMethod) {
+    if (!phone || !business || !id || !orderItems || !orderDetails || !paymentMethod) {
         return NextResponse.json({ error: 'Phone number is required' }, { status: 400 });
     }
 
@@ -40,43 +40,27 @@ export async function POST(req: NextRequest) {
                             parameters: [
                                 {
                                     type: 'text',
-                                    parameter_name: 'order_items',
+                                    parameter_name: 'business',
+                                    text: business
+                                },
+
+                                {
+                                    type: 'text',
+                                    parameter_name: 'products',
                                     text: orderItems
                                 },
                                 {
                                     type: 'text',
-                                    parameter_name: 'order_details',
+                                    parameter_name: 'details',
                                     text: orderDetails
                                 },
                                 {
                                     type: 'text',
-                                    parameter_name: 'payment_method',
+                                    parameter_name: 'payment',
                                     text: paymentMethod
                                 }
                             ]
                         },
-                        {
-                            type: 'button',
-                            sub_type: 'url',
-                            index: '0',
-                            parameters: [
-                                {
-                                    type: 'text',
-                                    text: id
-                                }
-                            ]
-                        },
-                        {
-                            type: 'button',
-                            sub_type: 'url',
-                            index: '1',
-                            parameters: [
-                                {
-                                    type: 'text',
-                                    text: id
-                                }
-                            ]
-                        }
                     ]
                 }
             }),
