@@ -1,7 +1,4 @@
-import { pocketbase } from '@/api/pocketbase';
 import { NextRequest, NextResponse } from 'next/server';
-import { text } from 'stream/consumers';
-import { OrdersResponse } from '../../../api/api_types';
 
 export async function POST(req: NextRequest) {
     const { phone, id, orderItems, orderDetails, paymentMethod } = await req.json();
@@ -11,7 +8,6 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        const pb = await pocketbase();
         const response = await fetch('https://graph.facebook.com/v22.0/556656727528256/messages', {
             method: 'POST',
             headers: {
@@ -93,12 +89,6 @@ export async function POST(req: NextRequest) {
         }
 
         const data = await response.json();
-        // try {
-        //     const ordersResponse = await pb.collection('orders').update(id, {status: true});
-        //     console.log(ordersResponse)
-        // } catch (error) {
-        //     console.error('Error occurred:', error);
-        // }
         return NextResponse.json(data, { status: response.status });
     } catch (error) {
         console.error('Error occurred:', error);
