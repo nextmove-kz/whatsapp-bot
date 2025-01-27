@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(req: NextRequest) {
+export async function POST(req: Request) {
+    console.log("HITHITHITHITHTI")
     const { phone, business, id, orderItems, orderDetails, paymentMethod } = await req.json();
-
+    const request = { phone, business, id, orderItems, orderDetails, paymentMethod };
+    console.log(request)
     if (!phone || !business || !id || !orderItems || !orderDetails || !paymentMethod) {
         return NextResponse.json({ error: 'Phone number is required' }, { status: 400 });
     }
@@ -19,7 +21,7 @@ export async function POST(req: NextRequest) {
                 to: phone,
                 type: 'template',
                 template: {
-                    name: 'business_order_notification',
+                    name: 'client_success',
                     language: {
                         code: 'ru',
                         policy: 'deterministic'
