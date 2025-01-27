@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
                 to: phone,
                 type: 'template',
                 template: {
-                    name: 'business_order_notification',
+                    name: 'pay_success',
                     language: {
                         code: 'ru',
                         policy: 'deterministic'
