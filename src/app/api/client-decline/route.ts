@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
                 to: phone,
                 type: 'template',
                 template: {
-                    name: 'client_decline',
+                    name: 'client_declined',
                     language: {
                         code: 'ru',
                         policy: 'deterministic'
