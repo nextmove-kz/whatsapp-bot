@@ -1,14 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const { phone, business, id, orderItems } = await req.json();
+  const body = await req.json();
 
-  if (!phone || !business || !id || !orderItems) {
+  if (!body.phone) {
     return NextResponse.json(
       { error: "Phone number is required" },
       { status: 400 }
     );
   }
+
+  const params = makeParams(body);
 
   try {
     const response = await fetch(
@@ -21,40 +23,18 @@ export async function POST(req: NextRequest) {
         },
         body: JSON.stringify({
           messaging_product: "whatsapp",
-          to: phone,
+          to: body.phone,
           type: "template",
           template: {
-            name: "client_declined",
+            name: "pay_success",
             language: {
               code: "ru",
               policy: "deterministic",
             },
             components: [
               {
-                type: "header",
-                parameters: [
-                  {
-                    type: "text",
-                    parameter_name: "order_id",
-                    text: id,
-                  },
-                ],
-              },
-              {
                 type: "body",
-                parameters: [
-                  {
-                    type: "text",
-                    parameter_name: "business",
-                    text: business,
-                  },
-
-                  {
-                    type: "text",
-                    parameter_name: "products",
-                    text: orderItems,
-                  },
-                ],
+                parameters: params,
               },
             ],
           },
@@ -80,3 +60,15 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+type Param = {
+  type: "text";
+  parameter_name: string;
+  text: string;
+};
+
+const makeParams = (params: Object): Param[] => {
+  return Object.entries(params).map(([key, value]) => {
+    return { type: "text", parameter_name: key, text: value };
+  });
+};
