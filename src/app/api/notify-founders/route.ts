@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
           to: "787021544205",
           type: "template",
           template: {
-            name: "pay_success",
+            name: "consultation_notify",
             language: {
               code: "ru",
               policy: "deterministic",
