@@ -3,13 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   const body = await req.json();
 
-  if (!body.phone) {
-    return NextResponse.json(
-      { error: "Phone number is required" },
-      { status: 400 }
-    );
-  }
-
   const params = makeParams(body);
 
   try {
@@ -23,7 +16,7 @@ export async function POST(req: NextRequest) {
         },
         body: JSON.stringify({
           messaging_product: "whatsapp",
-          to: body.phone,
+          to: "787021544205",
           type: "template",
           template: {
             name: "pay_success",
