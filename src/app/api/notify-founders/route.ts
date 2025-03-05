@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
         },
         body: JSON.stringify({
           messaging_product: "whatsapp",
-          to: "787021544205",
+          to: "787058275283",
           type: "template",
           template: {
             name: "consultation_notify",
