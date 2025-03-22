@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const response = await fetch(
-      "https://graph.facebook.com/v22.0/518219054710415/messages",
+      "https://graph.facebook.com/v22.0/556656727528256/messages",
       {
         method: "POST",
         headers: {
@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
         },
         body: JSON.stringify({
           messaging_product: "whatsapp",
-          to: "787058275283",
+          to: "787058266543",
           type: "template",
           template: {
             name: "consultation_notify",
